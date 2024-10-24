@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class ProdutoService {
     }
 
     public ProdutoDTO insert(ProdutoDTO produtoRequestDTO){
-        Produto produtoSaved = this.produtoRepository.save(ProdutoDTO.toEntity(produtoRequestDTO));
+        Produto produtoSaved = this.produtoRepository.save(produtoRequestDTO.toEntity());
 
         return ProdutoDTO.fromEntity(produtoSaved);
     }
@@ -38,7 +37,7 @@ public class ProdutoService {
             throw new ValidationException(String.format("Id da seção '%d' diferente do id do Request '%d'", idUpdate, produtoRequestDTO.getId()));
         }
 
-        Produto produtoSaved = this.produtoRepository.save(prepareToMerge(ProdutoDTO.toEntity(produtoRequestDTO)));
+        Produto produtoSaved = this.produtoRepository.save(prepareToMerge(produtoRequestDTO.toEntity()));
 
         return ProdutoDTO.fromEntity(produtoSaved);
     }

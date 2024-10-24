@@ -11,6 +11,7 @@ public class ProdutoDTO {
     private String descricao;
     private BigDecimal preco;
     private BigDecimal desconto;
+    private String caminhoimagem;
 
     public static ProdutoDTO fromEntity(Produto produto){
         ProdutoDTO produtoDTO = new ProdutoDTO();
@@ -18,16 +19,18 @@ public class ProdutoDTO {
         produtoDTO.setDescricao(produto.getDescricao());
         produtoDTO.setPreco(produto.getPreco());
         produtoDTO.setDesconto(produto.getDesconto());
+        produtoDTO.setCaminhoimagem(produto.getCaminhoimagem());
 
         return produtoDTO;
     }
 
-    public static Produto toEntity(ProdutoDTO produtoDTO){
+    public Produto toEntity(){
         Produto produto = new Produto();
-        produto.setId(produtoDTO.getId());
-        produto.setDescricao(produtoDTO.getDescricao());
-        produto.setPreco(produtoDTO.getPreco());
-        produto.setDesconto(produtoDTO.getDesconto());
+        produto.setId(this.getId());
+        produto.setDescricao(this.getDescricao());
+        produto.setPreco(this.getPreco());
+        produto.setDesconto(this.getDesconto());
+        produto.setCaminhoimagem(this.getCaminhoimagem());
 
         return produto;
     }

@@ -31,6 +31,9 @@ public class Produto implements Serializable {
     @NotNull
     private BigDecimal desconto = BigDecimal.ZERO;
 
+    @Column(length = 4000)
+    private String caminhoimagem;
+
     public Produto merge(Produto produtoToMerge){
         this.setDescricao(produtoToMerge.getDescricao());
         this.setPreco(produtoToMerge.getPreco());

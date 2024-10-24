@@ -22,13 +22,13 @@ public class ClienteDTO {
         return clienteDTO;
     }
 
-    public static Cliente toEntity(ClienteDTO clienteDTO){
+    public Cliente toEntity(){
         Cliente cliente = new Cliente();
-        cliente.setId(clienteDTO.getId());
-        cliente.setNome(clienteDTO.getNome());
-        cliente.setEmail(clienteDTO.getEmail());
-        cliente.setTelefone(clienteDTO.getTelefone());
-        cliente.setEndereco(clienteDTO.getEndereco());
+        cliente.setId(this.getId());
+        cliente.setNome(this.getNome());
+        cliente.setEmail(this.getEmail());
+        cliente.setTelefone(this.getTelefone());
+        cliente.setEndereco(this.getEndereco());
 
         return cliente;
     }

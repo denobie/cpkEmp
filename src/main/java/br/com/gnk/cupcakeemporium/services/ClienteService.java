@@ -2,10 +2,12 @@ package br.com.gnk.cupcakeemporium.services;
 
 import br.com.gnk.cupcakeemporium.dto.ClienteDTO;
 import br.com.gnk.cupcakeemporium.entities.Cliente;
+import br.com.gnk.cupcakeemporium.exceptions.DataBaseException;
 import br.com.gnk.cupcakeemporium.exceptions.RestException;
 import br.com.gnk.cupcakeemporium.exceptions.ValidationException;
 import br.com.gnk.cupcakeemporium.repositories.ClienteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,7 @@ public class ClienteService {
     }
 
     public ClienteDTO insert(ClienteDTO clienteRequestDTO){
-        Cliente clienteSaved = this.clienteRepository.save(ClienteDTO.toEntity(clienteRequestDTO));
+        Cliente clienteSaved = this.clienteRepository.save(clienteRequestDTO.toEntity());
 
         return ClienteDTO.fromEntity(clienteSaved);
     }
@@ -35,9 +37,18 @@ public class ClienteService {
             throw new ValidationException(String.format("Id da seção '%d' diferente do id do Request '%d'", idUpdate, clienteRequestDTO.getId()));
         }
 
-        Cliente clienteSaved = this.clienteRepository.save(prepareToMerge(ClienteDTO.toEntity(clienteRequestDTO)));
+        Cliente clienteSaved = this.clienteRepository.save(prepareToMerge(clienteRequestDTO.toEntity()));
 
         return ClienteDTO.fromEntity(clienteSaved);
+    }
+
+    public void delete(Long idDelete){
+        try {
+            this.clienteRepository.deleteById(foundCliente(idDelete).getId());
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DataBaseException(e.getMessage());
+        }
     }
 
     private Cliente prepareToMerge(Cliente clienteToSave){
