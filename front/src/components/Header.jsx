@@ -1,5 +1,5 @@
 function Header() {
-    return (<header>Bem vindo a loja de cupcakes</header>)
+    return (<header>Teste Header Component - Bem Vindo à loja de cupcakes</header>)
 }
 
 export default Header;

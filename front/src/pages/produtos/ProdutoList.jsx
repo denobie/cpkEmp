@@ -1,20 +1,44 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import './produtos.css'
-import * as React from 'react';
 import Button from '@mui/material/Button';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function getProdutos() {
     return axios.get('http://localhost:8080/api/produto')
 }
 
 function Produto(props) {
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(value);
+    }
+
     const produto = props.produto;
-    return (<div className="produtos">
-        <p>Descrição: {produto.descricao}</p>
-        <p>Preço: {produto.preco}</p>
-        <img src={produto.caminhoimagem} width="250" height="250"/>
-    </div>)
+    return (
+        <div className="div-list">
+            <div className="produtos">
+                <div className="div-img-produto">
+                    <img src={produto.caminhoimagem} width="250" height="250"/>
+                </div>
+                <div>
+                    <div>
+                        <h2 className="h2-nome-produto">
+                            <p>{produto.descricao}</p>
+                        </h2>
+                    </div>
+                    <div className="div-preco">
+                        <p>{formatCurrency(produto.preco)}</p>
+                    </div>
+                    <div>
+                        <Button variant="contained" startIcon={<AddShoppingCartIcon />}>Adicionar ao Carrinho</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 function ProdutoList() {

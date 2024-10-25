@@ -1,0 +1,79 @@
+.div-login {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3e5f5;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+label {
+    text-align: left;
+    display: block;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+h1 {
+    color: #9c27b0;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #303f9f;
+}
+
+.link {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #3f51b5;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.create-account {
+    background-color: #e91e63;
+    margin-top: 10px;
+}

@@ -1,3 +1,33 @@
+.div-list {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 100vh;*/
+    background-color: #f3e5f5;
+}
+
+.h2-nome-produto {
+    text-align: center;
+    font-weight: 700;
+}
+
 .produtos {
-    color: blue
+    display: flex;
+    flex-direction: row;
+}
+
+.div-img-produto {
+    display: block;
+}
+
+.div-preco{
+    display: block;
+    text-align: left;
+    box-sizing: border-box;
+    unicode-bidi: isolate;
+    font-size: 14px !important;
+    line-height: 20px !important;
 }
