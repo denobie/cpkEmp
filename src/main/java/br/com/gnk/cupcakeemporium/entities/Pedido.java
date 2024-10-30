@@ -1,6 +1,8 @@
 package br.com.gnk.cupcakeemporium.entities;
 
+import br.com.gnk.cupcakeemporium.enumerable.FormaPagamento;
 import br.com.gnk.cupcakeemporium.enumerable.SituacaoPedido;
+import br.com.gnk.cupcakeemporium.enumerable.converter.FormaPagamentoEnumConverter;
 import br.com.gnk.cupcakeemporium.enumerable.converter.SituacaoPedidoEnumConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -34,6 +36,10 @@ public class Pedido {
     @PastOrPresent
     private LocalDate dataFaturamento;
 
+    @Column(name = "datapagamento")
+    @PastOrPresent
+    private LocalDate dataPagamento;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cliente", referencedColumnName = "id")
@@ -47,5 +53,10 @@ public class Pedido {
     @Convert(converter = SituacaoPedidoEnumConverter.class)
     private SituacaoPedido situacaoPedido;
 
-    private String formaPagamento;
+    @Column(name = "formapagamento")
+    @Convert(converter = FormaPagamentoEnumConverter.class)
+    private FormaPagamento formaPagamento;
+
+    @Column(name = "quantidadeparcelas")
+    private Long quantidadeParcelas;
 }

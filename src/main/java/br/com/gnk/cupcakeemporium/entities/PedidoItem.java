@@ -27,9 +27,14 @@ public class PedidoItem {
     @NotNull
     private Pedido pedido;
 
+    private Long quantidade;
+
     private BigDecimal preco;
 
     private BigDecimal desconto;
+
+    @Column(name = "valortotal")
+    private BigDecimal valorTotal;
 
     @ManyToOne
     @JoinColumn(name = "produto", referencedColumnName = "id")

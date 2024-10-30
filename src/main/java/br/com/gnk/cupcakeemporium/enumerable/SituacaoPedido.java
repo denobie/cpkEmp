@@ -1,10 +1,12 @@
 package br.com.gnk.cupcakeemporium.enumerable;
 
 import br.com.gnk.cupcakeemporium.exceptions.ValidationException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 
 @Getter
+@AllArgsConstructor
 public enum SituacaoPedido {
     ABERTO("A", "EM ABERTO"),
     FATURADO("F", "FATURADO"),
@@ -12,11 +14,6 @@ public enum SituacaoPedido {
 
     private final String value;
     private final String descricao;
-
-    SituacaoPedido(String value, String descricao){
-        this.value = value;
-        this.descricao = descricao;
-    }
 
     public static SituacaoPedido fromValue(String value){
         return switch (value) {
