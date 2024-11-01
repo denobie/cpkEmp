@@ -1,30 +1,25 @@
-import React from "react";
-import './home.css'
+import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 
 function Home() {
     const navigate = useNavigate();
 
-    const login = () =>{
-        navigate("/produtos");
+    const navigateToProdutoList = () => {
+        navigate("/produtos")
     }
 
-    return <div className={"div-login"}>
-        <div className="container">
-            <h1>Cupcake Emporium</h1>
-            <h2>Bem-vindo(a)</h2>
+    const navigateToNovoProduto = () => {
+        navigate("/produtos/novo")
+    }
 
-            <label>Email</label>
-            <input type="email" placeholder="email"/>
-
-            <label>Senha</label>
-            <input type="password" placeholder="sua senha"/>
-
-            <button className="btn" onClick={login}>Login</button>
-
-            <a href="/produtos" className="link">Esqueceu sua senha?</a>
-
-            <button className="btn create-account">Criar Conta</button>
+    return <div className={"div-panel"}>
+        <div>
+            <Button variant="contained" onClick={navigateToProdutoList}>Produtos</Button>
+            <Button variant="contained" onClick={navigateToNovoProduto}>Novo Produto</Button>
+        </div>
+        <div>
+            <Button variant="contained" onClick={navigateToNovoProduto}>Clientes</Button>
+            <Button variant="contained" onClick={navigateToNovoProduto}>NovoCliente</Button>
         </div>
     </div>
 }

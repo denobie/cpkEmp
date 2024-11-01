@@ -13,13 +13,14 @@ import {
 import ProdutoList from "./pages/produtos/ProdutoList";
 import ProdutoForm from "./pages/produtos/ProdutoForm";
 import Header from "./components/Header";
+import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Home,
+    Component: Login,
   },
   {
     path: "/produtos",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     path: "/produtos/novo",
     Component: ProdutoForm,
   },
+  {
+    path: "/home",
+    Component: Home,
+  }
 ]);
 
 

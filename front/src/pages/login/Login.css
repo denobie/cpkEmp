@@ -18,7 +18,7 @@
     width: 300px;
 }
 
-label {
+.label-login {
     text-align: left;
     display: block;
     padding-left: 2px;
@@ -27,19 +27,19 @@ label {
     font-size: 15px;
 }
 
-h1 {
+.h1-login {
     color: #9c27b0;
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-h2 {
+.h2-login {
     font-size: 18px;
     color: #333;
     margin-bottom: 20px;
 }
 
-input[type="email"], input[type="password"] {
+.input-login[type="email"], input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;

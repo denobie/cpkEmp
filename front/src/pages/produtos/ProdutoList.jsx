@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import './produtos.css'
+import './ProdutoList.css'
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
@@ -33,7 +33,7 @@ function Produto(props) {
                         <p>{formatCurrency(produto.preco)}</p>
                     </div>
                     <div>
-                        <Button variant="contained" startIcon={<AddShoppingCartIcon />}>Adicionar ao Carrinho</Button>
+                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} >Adicionar ao Carrinho</Button>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@ function ProdutoList() {
 
     console.log(produtos);
 
-    return <div>Lista de Produtos
+    return <div>
 
         {loading ? <div>loading...</div> : null}
 
