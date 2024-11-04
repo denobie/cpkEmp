@@ -12,14 +12,22 @@ function Home() {
         navigate("/produtos/novo")
     }
 
+    const navigateToClientList = () => {
+        navigate("/clientes")
+    }
+
+    const navigateToNovoCliente = () => {
+        navigate("/cliente/novo")
+    }
+
     return <div className={"div-panel"}>
         <div>
             <Button variant="contained" onClick={navigateToProdutoList}>Produtos</Button>
             <Button variant="contained" onClick={navigateToNovoProduto}>Novo Produto</Button>
         </div>
         <div>
-            <Button variant="contained" onClick={navigateToNovoProduto}>Clientes</Button>
-            <Button variant="contained" onClick={navigateToNovoProduto}>NovoCliente</Button>
+            <Button variant="contained" onClick={navigateToClientList}>Clientes</Button>
+            <Button variant="contained" onClick={navigateToNovoCliente}>NovoCliente</Button>
         </div>
     </div>
 }

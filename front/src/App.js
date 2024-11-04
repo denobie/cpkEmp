@@ -12,9 +12,11 @@ import {
 } from "react-router-dom";
 import ProdutoList from "./pages/produtos/ProdutoList";
 import ProdutoForm from "./pages/produtos/ProdutoForm";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
+import ClienteList from "./pages/clientes/ClienteList";
+import ClienteForm from "./pages/clientes/ClienteForm";
 
 
 const router = createBrowserRouter([
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
   {
     path: "/home",
     Component: Home,
+  },
+  {
+    path: "/clientes",
+    Component: ClienteList,
+  },
+  {
+    path: "/cliente/novo",
+    Component: ClienteForm,
   }
 ]);
 

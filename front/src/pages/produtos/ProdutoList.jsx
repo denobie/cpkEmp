@@ -71,7 +71,6 @@ function ProdutoList() {
             return (<Produto produto={produto}/>)
         })}
 
-        <button onClick={buscarProdutos}>Buscar</button>
         <Button variant="contained" onClick={buscarProdutos}>Buscar</Button>
         <a href={"/produtos/novo"}>Novo Produto</a>
 
