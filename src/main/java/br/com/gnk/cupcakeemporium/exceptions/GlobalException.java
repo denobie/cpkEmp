@@ -2,6 +2,8 @@ package br.com.gnk.cupcakeemporium.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.time.ZoneId;
 
 @ControllerAdvice
 public class GlobalException {
+    private static final Logger logger = LoggerFactory.getLogger(GlobalException.class);
 
     private HttpHeaders generateHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -47,7 +50,7 @@ public class GlobalException {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<StandardError> constraintViolationException(RuntimeException e, HttpServletRequest request){
-        Throwable throwable = e.getCause();
+        e.printStackTrace();
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
@@ -61,6 +64,10 @@ public class GlobalException {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<StandardError> validationException(RuntimeException e, HttpServletRequest request){
+        logger.error(e.getStackTrace().toString());
+        logger.error("--------------------------------------");
+        e.printStackTrace();
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .headers(generateHeaders())

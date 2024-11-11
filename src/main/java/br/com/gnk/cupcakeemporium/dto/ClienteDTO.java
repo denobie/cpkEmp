@@ -10,6 +10,12 @@ public class ClienteDTO {
     private String email;
     private String telefone;
     private String endereco;
+    private String cep;
+    private String numeroResidencia;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
 
     public static ClienteDTO fromEntity(Cliente cliente){
         ClienteDTO clienteDTO = new ClienteDTO();
@@ -18,6 +24,12 @@ public class ClienteDTO {
         clienteDTO.setEmail(cliente.getEmail());
         clienteDTO.setTelefone(cliente.getTelefone());
         clienteDTO.setEndereco(cliente.getEndereco());
+        clienteDTO.setCep(cliente.getCep());
+        clienteDTO.setNumeroResidencia(cliente.getNumeroResidencia());
+        clienteDTO.setComplemento(cliente.getComplemento());
+        clienteDTO.setBairro(cliente.getBairro());
+        clienteDTO.setCidade(cliente.getCidade());
+        clienteDTO.setUf(cliente.getUf());
 
         return clienteDTO;
     }
@@ -29,6 +41,12 @@ public class ClienteDTO {
         cliente.setEmail(this.getEmail());
         cliente.setTelefone(this.getTelefone());
         cliente.setEndereco(this.getEndereco());
+        cliente.setCep(this.getCep());
+        cliente.setNumeroResidencia(this.getNumeroResidencia());
+        cliente.setComplemento(this.getComplemento());
+        cliente.setBairro(this.getBairro());
+        cliente.setCidade(this.getCidade());
+        cliente.setUf(this.getUf());
 
         return cliente;
     }
