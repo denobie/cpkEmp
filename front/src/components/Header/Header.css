@@ -1,0 +1,91 @@
+.header{
+    position: static;
+    unicode-bidi: isolate;
+    display: flex;
+    box-sizing: border-box;
+    float: none;
+}
+
+.main{
+    display: flex;
+    flex: 1 1 auto;
+    position: static;
+    float: none;
+}
+
+.h1-nome-logo {
+    color: #9c27b0;
+    font-size: 24px;
+    margin-top: 24px;
+}
+
+.nav-left{
+    float: left;
+    height: 60px;
+    width: 450px;
+    display: flex;
+}
+
+.nav-left{
+    float: left;
+}
+
+.nav-right{
+    margin-left: auto;
+    display: flex;
+    margin-top: 30px;
+    margin-right: 15px;
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+}
+
+.link{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    position: static;
+    text-decoration: none;
+    /*line-height: 44px;*/
+}
+
+.cart-count{
+    position: absolute;
+    top: -5px;
+    left: 12px;
+    line-height: 16px;
+    color: #9c27b0;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.cart-count-10{
+    position: absolute;
+    top: -5px;
+    left: 8px;
+    line-height: 16px;
+    color: #9c27b0;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav-carrinho{
+    margin-right: 10px;
+    background-image: url("./justCarrinho.png");
+    /*background-position: -10px -340px;*/
+    width: 38px;
+    height: 26px;
+    /*display: inline-block; !* Permite definir largura e altura *!*/
+    /*background-size: cover; !* Ajusta a imagem para cobrir a área do span *!*/
+    /*background-repeat: no-repeat; !* Evita que a imagem se repita *!*/
+    /*color: white; !* Cor do texto no span *!*/
+    /*padding: 10px; !* Espaçamento interno *!*/
+}

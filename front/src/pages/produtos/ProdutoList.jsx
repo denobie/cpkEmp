@@ -1,14 +1,18 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import './ProdutoList.css'
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import {CartContext} from '../../contexts/CartContext';
+import {useNavigate} from "react-router-dom";
 
 function getProdutos() {
     return axios.get('http://localhost:8080/api/produto')
 }
 
-function Produto(props) {
+function Produto({produto}) {
+    const { handleAddCart } = useContext(CartContext);
+
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -16,12 +20,11 @@ function Produto(props) {
         }).format(value);
     }
 
-    const produto = props.produto;
     return (
         <div className="div-list">
             <div className="produtos">
                 <div className="div-img-produto">
-                    <img src={produto.caminhoimagem} width="250" height="250"/>
+                    <img className="img-produto" src={produto.caminhoimagem} width="250" height="250"/>
                 </div>
                 <div>
                     <div>
@@ -33,7 +36,7 @@ function Produto(props) {
                         <p>{formatCurrency(produto.preco)}</p>
                     </div>
                     <div>
-                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} >Adicionar ao Carrinho</Button>
+                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} onClick={() => handleAddCart(produto, 1)}>Adicionar ao Carrinho</Button>
                     </div>
                 </div>
             </div>
@@ -42,15 +45,14 @@ function Produto(props) {
 }
 
 function ProdutoList() {
-
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const { cartItems } = useContext(CartContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         buscarProdutos()
     }, []);
-
 
     const buscarProdutos = () => {
         setLoading(true);
@@ -60,19 +62,22 @@ function ProdutoList() {
             .finally(() => setLoading(false));
     }
 
-    console.log(produtos);
-
     return <div>
+        {loading && <div>Carregando...</div>}
 
-        {loading ? <div>loading...</div> : null}
+        {produtos.length > 0 ? (
+            produtos.map((produto) => (
+                <Produto
+                    key={produto.id}
+                    produto={produto}
+                />
+            ))
+        ) : (
+            !loading && <p>Nenhum produto encontrado.</p>
+        )}
 
-
-        {produtos.map((produto) => {
-            return (<Produto produto={produto}/>)
-        })}
-
-        <Button variant="contained" onClick={buscarProdutos}>Buscar</Button>
-        <a href={"/produtos/novo"}>Novo Produto</a>
+        {/*<Button variant="contained" onClick={buscarProdutos}>Buscar</Button>*/}
+        <Button variant="contained" onClick={() => {navigate("/carrinho")}}>Carrinho</Button>
 
     </div>
 }

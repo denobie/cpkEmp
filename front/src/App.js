@@ -3,13 +3,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-
-
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, Outlet, RouterProvider, useLocation} from "react-router-dom";
 import ProdutoList from "./pages/produtos/ProdutoList";
 import ProdutoForm from "./pages/produtos/ProdutoForm";
 import Header from "./components/Header/Header";
@@ -17,43 +11,47 @@ import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import ClienteList from "./pages/clientes/ClienteList";
 import ClienteForm from "./pages/clientes/ClienteForm";
+import Carrinho from "./pages/carrinho/Carrinho";
+import CartProvider from "./contexts/CartContext";
 
+const MainLayout = () => {
+  const location = useLocation();
+
+  // Exibe o Header apenas se não estiver na rota de login
+  const shouldShowHeader = location.pathname !== "/";
+
+  return (
+      <>
+        {shouldShowHeader && <Header />}
+        <Outlet />
+      </>
+  );
+};
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    Component: Login,
+    element: <MainLayout />, // Define o MainLayout como o layout principal
+    children: [
+      { path: "/", element: <Login /> },
+      { path: "/produtos", element: <ProdutoList /> },
+      { path: "/produtos/novo", element: <ProdutoForm /> },
+      { path: "/home", element: <Home /> },
+      { path: "/clientes", element: <ClienteList /> },
+      { path: "/cliente/novo", element: <ClienteForm /> },
+      { path: "/carrinho", element: <Carrinho /> },
+    ],
   },
-  {
-    path: "/produtos",
-    Component: ProdutoList,
-  },
-  {
-    path: "/produtos/novo",
-    Component: ProdutoForm,
-  },
-  {
-    path: "/home",
-    Component: Home,
-  },
-  {
-    path: "/clientes",
-    Component: ClienteList,
-  },
-  {
-    path: "/cliente/novo",
-    Component: ClienteForm,
-  }
 ]);
-
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <RouterProvider router={router} />
-    </div>
+      <CartProvider>
+        <div className="App">
+          <RouterProvider router={router} />
+        </div>
+      </CartProvider>
   );
 }
+
 
 export default App;

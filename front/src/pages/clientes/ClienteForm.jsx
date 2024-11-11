@@ -1,8 +1,12 @@
+import * as React from 'react';
 import {useState} from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import SearchIcon from '@mui/icons-material/Search';
 import Button from "@mui/material/Button";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import axios from "axios";
+import {IconButton, InputAdornment} from "@mui/material";
 
 function consultarViaCep(cep){
     return axios.get(`https://viacep.com.br/ws/${cep}/json/`)
@@ -13,7 +17,6 @@ function consultarViaCep(cep){
 
 function ClienteForm() {
     const [cliente, setCliente] = useState({});
-    const [cep, setCEP] = useState({});
 
     const salvar = () => {
         axios.post('http://localhost:8080/api/cliente', cliente)
@@ -22,78 +25,94 @@ function ClienteForm() {
 
     const buscarCEP = (cep) => {
         consultarViaCep(cep)
-            .then(resultado => setCEP({...cep,
-                                             logradouro: resultado.data.logradouro,
-                                             bairro: resultado.data.bairro,
-                                             cidade: resultado.data.localidade,
-                                             uf: resultado.data.uf}))
+            .then(resultado => setCliente({...cliente,
+                endereco: resultado.data.logradouro,
+                bairro: resultado.data.bairro,
+                cidade: resultado.data.localidade,
+                uf: resultado.data.uf}));
     }
 
-    return <div className={"container-cliente"}>
-        <div>
-            <label htmlFor="nome">Nome Completo</label>
-            <input id={"nome"} name="descricao" type="text" onChange={
-                e => {
-                    setCliente({...cliente, nome: e.target.value})
-                }
+    return <Box display="flex" flexDirection="column" alignItems="center" maxWidth="400px"
+                margin="auto" mt={1}>
+        <Box mb={1}>
+            <TextField id={"nome"} name="nome" type="text" label="Nome Completo" variant="outlined" size="small"
+                       onChange={
+                            e => {
+                               setCliente({...cliente, nome: e.target.value})
+                           }
+                       }/>
+        </Box>
+        <Box mb={1}>
+            <TextField id={"email"} name="email" type="text" label="Email" variant="outlined" size="small"
+                       onChange={
+                        e => {
+                            setCliente({...cliente, email: e.target.value})
+                        }
             }/>
-        </div>
-        <div>
-            <label htmlFor="email">Email</label>
-            <input id={"email"} name="email" type="text" onChange={
-                e => {
-                    setCliente({...cliente, email: e.target.value})
-                }
-            }/>
-        </div>
-        <div>
-            <label htmlFor="telefone">Telefone</label>
-            <input id={"telefone"} name="telefone" type="text" onChange={
-                e => {
+        </Box>
+        <Box mb={1}>
+            <TextField id={"telefone"} name="telefone" type="text" label="Telefone" variant="outlined" size="small"
+                       onChange={
+                    e => {
                     setCliente({...cliente, telefone: e.target.value})
                 }
             }/>
-        </div>
-        <div>
-            <label htmlFor="cep">Cep</label>
-            <input id={"cep"} name="cep" type="text" onChange={
-                e => {
-                    setCliente({...cliente, cep: e.target.value})
+        </Box>
+        <Box mb={1}>
+                <TextField id={"cep"} name="cep" type="text" label="Cep" variant="outlined" size="small"
+                           sx={{width: '25ch' }}
+                           onChange={e => setCliente({ ...cliente, cep: e.target.value })}
+                           InputProps={{
+                               endAdornment: (
+                                   <InputAdornment position="end">
+                                       <IconButton
+                                           variant="contained"
+                                           size="small"
+                                           onClick={() => buscarCEP(cliente.cep)}
+                                       >
+                                           <SearchIcon />
+                                       </IconButton>
+                                   </InputAdornment>
+                               ),
+                           }}
+                />
+        </Box>
+        <Box mb={1}>
+            <TextField id={"endereco"} name="endereco" type="text" label="Endereço" variant="outlined" size="small"
+                       readOnly value={cliente.endereco ? cliente.endereco : ''}/>
+        </Box>
+        <Box mb={1}>
+            <TextField id={"numero"} name="numero" type="text" label="Número da Residência" variant="outlined" size="small"
+                       onChange={
+                    e => {
+                    setCliente({...cliente, numeroResidencia: e.target.value})
                 }
             }/>
-            <Button variant="contained" size="small" startIcon={<SearchIcon/>} onClick={
-                () => {
-                    buscarCEP(cliente.cep)
+        </Box>
+        <Box mb={1}>
+            <TextField id={"complemento"} name="complemento" type="text" label="Complemento (opcional)" variant="outlined" size="small"
+                       onChange={
+                    e => {
+                    setCliente({...cliente, complemento: e.target.value})
                 }
-            }></Button>
-        </div>
-        <div>
-            <label htmlFor="logradouro">Endereço</label>
-            <input id={"logradouro"} name="logradouro" type="text" readOnly value={cep.logradouro}/>
-        </div>
-        <div>
-            <label htmlFor="numero">Número da Residência</label>
-            <input id={"numero"} name="numero" type="text"/>
-        </div>
-        <div>
-            <label htmlFor="complemento">Complemento (opcional)</label>
-            <input id={"complemento"} name="complemento" type="text"/>
-        </div>
-        <div>
-            <label htmlFor="bairro">Bairro</label>
-            <input id={"bairro"} name="bairro" type="text" readOnly value={cep.bairro}/>
-        </div>
-        <div>
-            <label htmlFor="cidade">Cidade</label>
-            <input id={"cidade"} name="cidade" type="text" readOnly value={cep.cidade}/>
-        </div>
-        <div>
-            <label htmlFor="uf">Estado</label>
-            <input id={"uf"} name="uf" type="text" readOnly value={cep.uf}/>
-        </div>
+            }/>
+        </Box>
+        <Box mb={1}>
+            <TextField id={"bairro"} name="bairro" type="text" label="Bairro" variant="outlined" size="small"
+                       readOnly value={cliente.bairro ? cliente.bairro : ''}
+            />
+        </Box>
+        <Box mb={1}>
+            <TextField id={"cidade"} name="cidade" type="text" label="Cidade" variant="outlined" size="small"
+                       readOnly value={cliente.cidade ? cliente.cidade : ''} />
+        </Box>
+        <Box mb={1}>
+            <TextField id={"uf"} name="uf" type="text" label="Estado" variant="outlined" size="small" readOnly
+                       value={cliente.uf ? cliente.uf : ''}/>
+        </Box>
 
         <Button variant="contained" size="small" startIcon={<SaveIcon/>} onClick={salvar}>Salvar</Button>
-    </div>
+    </Box>
 }
 
 export default ClienteForm;

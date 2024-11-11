@@ -1,12 +1,18 @@
 .div-list {
-    margin: 0;
-    padding: 0;
+    margin: 10px;
+    padding: 2;
+    /*max-width: 800px;*/
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    /*height: 100vh;*/
     background-color: #f3e5f5;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 10px;
+    border: 1px solid lightgray;
 }
 
 .h2-nome-produto {
@@ -20,7 +26,19 @@
 }
 
 .div-img-produto {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    overflow: hidden;
+}
+
+.img-produto {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    margin-right: 20px;
 }
 
 .div-preco{
