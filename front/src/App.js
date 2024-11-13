@@ -12,7 +12,7 @@ import Home from "./pages/home/Home";
 import ClienteList from "./pages/clientes/ClienteList";
 import ClienteForm from "./pages/clientes/ClienteForm";
 import Carrinho from "./pages/carrinho/Carrinho";
-import CartProvider from "./contexts/CartContext";
+import CarrinhoProvider from "./contexts/CarrinhoContext";
 
 const MainLayout = () => {
   const location = useLocation();
@@ -34,10 +34,10 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Login /> },
       { path: "/produtos", element: <ProdutoList /> },
-      { path: "/produtos/novo", element: <ProdutoForm /> },
+      { path: "/produtos/:id", element: <ProdutoForm /> },
       { path: "/home", element: <Home /> },
       { path: "/clientes", element: <ClienteList /> },
-      { path: "/cliente/novo", element: <ClienteForm /> },
+      { path: "/cliente/:id", element: <ClienteForm /> },
       { path: "/carrinho", element: <Carrinho /> },
     ],
   },
@@ -45,11 +45,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-      <CartProvider>
+      <CarrinhoProvider>
         <div className="App">
           <RouterProvider router={router} />
         </div>
-      </CartProvider>
+      </CarrinhoProvider>
   );
 }
 

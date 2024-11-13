@@ -1,16 +1,13 @@
 .div-list {
-    margin: 10px;
-    padding: 2;
-    /*max-width: 800px;*/
+    margin: 30px;
+    padding: 2px;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f3e5f5;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    background-color: #ede4f2;
+    border-radius: 7px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
     gap: 10px;
     border: 1px solid lightgray;
 }
@@ -29,8 +26,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    padding-left: 8px;
+    padding-right: 8px;
     overflow: hidden;
 }
 
@@ -46,6 +43,6 @@
     text-align: left;
     box-sizing: border-box;
     unicode-bidi: isolate;
-    font-size: 14px !important;
-    line-height: 20px !important;
+    font-size: 14px;
+    line-height: 20px;
 }

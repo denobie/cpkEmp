@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import {useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 function Home() {
     const navigate = useNavigate();
@@ -23,6 +23,8 @@ function Home() {
     return <div className={"div-panel"}>
         <div>
             <Button variant="contained" onClick={navigateToProdutoList}>Produtos</Button>
+            {/*<Link style={{ textDecoration: 'none' }} to="/produtos">  <Button variant="contained" >Produtos</Button></Link>*/}
+            {/*<Link to="/produtos/novo">  <Button variant="contained" >Novo Produtos</Button></Link>*/}
             <Button variant="contained" onClick={navigateToNovoProduto}>Novo Produto</Button>
         </div>
         <div>

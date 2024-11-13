@@ -3,15 +3,26 @@ import {useContext, useEffect, useState} from "react";
 import './ProdutoList.css'
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import {CartContext} from '../../contexts/CartContext';
+import {CarrinhoContext} from '../../contexts/CarrinhoContext';
 import {useNavigate} from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
+import {Alert} from "@mui/material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function getProdutos() {
-    return axios.get('http://localhost:8080/api/produto')
+    return axios.get('http://192.168.18.12:8080/api/produto')
 }
 
 function Produto({produto}) {
-    const { handleAddCart } = useContext(CartContext);
+    const { handleAddCart, handleRemoveFromCart } = useContext(CarrinhoContext);
+    const [stateSnackbar, setStateSnackbar] = useState({
+        open: false,
+    });
+
+    const handleClose = () => {
+        setStateSnackbar({ ...stateSnackbar, open: false });
+    };
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('pt-BR', {
@@ -36,8 +47,43 @@ function Produto({produto}) {
                         <p>{formatCurrency(produto.preco)}</p>
                     </div>
                     <div>
-                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} onClick={() => handleAddCart(produto, 1)}>Adicionar ao Carrinho</Button>
+                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} onClick={
+                            () => {
+                                handleAddCart(produto, 1);
+                                setStateSnackbar({ ...stateSnackbar,
+                                    open: true,
+                                    severity: "success",
+                                    message: "Produto Adicionado ao Carrinho!"});
+                            }
+                        }>Adicionar ao Carrinho</Button>
                     </div>
+                    <div>
+                        <Button variant="text" size="small" startIcon={<DeleteOutlineIcon />} onClick={
+                            () => {
+                                handleRemoveFromCart(produto);
+                                setStateSnackbar({ ...stateSnackbar,
+                                    open: true,
+                                    severity:"error",
+                                    message: "Produto Removido do Carrinho!"});
+                            }
+                        }>Remover do Carrinho</Button>
+                    </div>
+                    <Snackbar
+                        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                        open={stateSnackbar.open}
+                        onClose={handleClose}
+                        TransitionComponent={Slide}
+                        key={stateSnackbar.vertical + stateSnackbar.horizontal}
+                        autoHideDuration={1500}>
+                        <Alert
+                            onClose={handleClose}
+                            severity={stateSnackbar.severity}
+                            variant="filled"
+                            sx={{ width: '100%' }}
+                        >
+                            {stateSnackbar.message}
+                        </Alert>
+                    </Snackbar>
                 </div>
             </div>
         </div>
@@ -47,7 +93,6 @@ function Produto({produto}) {
 function ProdutoList() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(false);
-    const { cartItems } = useContext(CartContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -77,7 +122,7 @@ function ProdutoList() {
         )}
 
         {/*<Button variant="contained" onClick={buscarProdutos}>Buscar</Button>*/}
-        <Button variant="contained" onClick={() => {navigate("/carrinho")}}>Carrinho</Button>
+        {/*<Button variant="contained" onClick={() => {navigate("/carrinho")}}>Carrinho</Button>*/}
 
     </div>
 }

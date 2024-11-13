@@ -1,37 +1,31 @@
 import './Header.css'
 import imgLogo from '../../imagens/cupcake100x100.png'
-import {useContext, useEffect, useState} from "react";
-import {CartContext} from "../../contexts/CartContext";
-import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {CarrinhoContext} from "../../contexts/CarrinhoContext";
+import {Link} from "react-router-dom";
 
 function Header() {
-    const {cartItems} = useContext(CartContext);
-    const [qtdeTotalCarrinho, setQtdeTotalCarrinho] = useState(0);
-    const navigate = useNavigate();
+    const {cartCount} = useContext(CarrinhoContext);
 
-    const cartCount = qtdeTotalCarrinho > 9 ? 'cart-count-10' : 'cart-count';
-
-    useEffect(() => {
-        if (cartItems.length > 0) {
-            setQtdeTotalCarrinho(qtdeTotalCarrinho + 1)
-        }
-    }, [cartItems]);
+    const valueCountCart = cartCount > 9 ? 'cart-count-10' : 'cart-count';
 
     return (
         <header className="header">
             <div className="main">
                 <div className="nav-left">
-                    <img className="img-produto" src={imgLogo} width="85" height="85"/>
+                    <Link className="link" to={"/home"}>
+                        <img className="img-produto" src={imgLogo} width="85" height="85"/>
+                    </Link>
                     <h1 className="h1-nome-logo">Cupcake Emporium</h1>
                 </div>
                 <div className="nav-fill">
                 </div>
                 <div className="nav-right">
                     <div className="cart-icon">
-                        <a href="/carrinho" className="link" onClick={() => {navigate("/carrinho")}}>
-                            <span className={cartCount}>{qtdeTotalCarrinho}</span>
+                        <Link className="link" to={"/carrinho"} >
+                            <span className={valueCountCart}>{cartCount}</span>
                             <div className="nav-carrinho"></div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
