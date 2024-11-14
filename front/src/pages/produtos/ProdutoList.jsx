@@ -40,7 +40,7 @@ function Produto({produto}) {
                 <div>
                     <div>
                         <h2 className="h2-nome-produto">
-                            <p>{produto.descricao}</p>
+                            <p align="left">{produto.descricao}</p>
                         </h2>
                     </div>
                     <div className="div-preco">
@@ -93,7 +93,7 @@ function Produto({produto}) {
 function ProdutoList() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         buscarProdutos()

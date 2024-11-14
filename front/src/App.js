@@ -13,6 +13,7 @@ import ClienteList from "./pages/clientes/ClienteList";
 import ClienteForm from "./pages/clientes/ClienteForm";
 import Carrinho from "./pages/carrinho/Carrinho";
 import CarrinhoProvider from "./contexts/CarrinhoContext";
+import Checkout from "./pages/checkout/Checkout";
 
 const MainLayout = () => {
   const location = useLocation();
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "/clientes", element: <ClienteList /> },
       { path: "/cliente/:id", element: <ClienteForm /> },
       { path: "/carrinho", element: <Carrinho /> },
+      { path: "/checkout", element: <Checkout /> },
     ],
   },
 ]);
