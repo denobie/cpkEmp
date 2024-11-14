@@ -4,7 +4,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import {createBrowserRouter, Outlet, RouterProvider, useLocation} from "react-router-dom";
-import ProdutoList from "./pages/produtos/ProdutoList";
+import Catalogo from "./pages/catalogo/Catalogo";
 import ProdutoForm from "./pages/produtos/ProdutoForm";
 import Header from "./components/Header/Header";
 import Login from "./pages/login/Login";
@@ -14,11 +14,11 @@ import ClienteForm from "./pages/clientes/ClienteForm";
 import Carrinho from "./pages/carrinho/Carrinho";
 import CarrinhoProvider from "./contexts/CarrinhoContext";
 import Checkout from "./pages/checkout/Checkout";
+import UserProvider from "./contexts/UserContext";
 
 const MainLayout = () => {
   const location = useLocation();
 
-  // Exibe o Header apenas se não estiver na rota de login
   const shouldShowHeader = location.pathname !== "/";
 
   return (
@@ -31,10 +31,10 @@ const MainLayout = () => {
 
 const router = createBrowserRouter([
   {
-    element: <MainLayout />, // Define o MainLayout como o layout principal
+    element: <MainLayout />,
     children: [
       { path: "/", element: <Login /> },
-      { path: "/produtos", element: <ProdutoList /> },
+      { path: "/catalogo", element: <Catalogo /> },
       { path: "/produtos/:id", element: <ProdutoForm /> },
       { path: "/home", element: <Home /> },
       { path: "/clientes", element: <ClienteList /> },
@@ -47,11 +47,15 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-      <CarrinhoProvider>
-        <div className="App">
-          <RouterProvider router={router} />
-        </div>
-      </CarrinhoProvider>
+
+          <CarrinhoProvider>
+              <UserProvider>
+            <div className="App">
+              <RouterProvider router={router} />
+            </div>
+              </UserProvider>
+          </CarrinhoProvider>
+
   );
 }
 

@@ -34,8 +34,6 @@ function ProdutoForm() {
             .then(res => {setProduto(res.data);})
     }, [id]);
 
-    const { cartItems } = useContext(CarrinhoContext);
-
     const handleClose = () => {
         setStateSnackbar({ ...stateSnackbar, open: false });
     };
@@ -125,7 +123,6 @@ function ProdutoForm() {
                     {stateSnackbar.message}
                 </Alert>
             </Snackbar>
-            <p>{JSON.stringify(cartItems)}</p>
         </Box>
 
 }

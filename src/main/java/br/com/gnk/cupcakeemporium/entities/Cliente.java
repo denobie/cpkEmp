@@ -1,12 +1,14 @@
 package br.com.gnk.cupcakeemporium.entities;
 
 import br.com.gnk.cupcakeemporium.dto.ClienteDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.util.ObjectUtils;
 
 @Entity
 @Table(name = "cliente")
@@ -58,6 +60,16 @@ public class Cliente {
     @NotNull
     private String uf;
 
+    @Column(length = 250)
+    @NotNull
+    @JsonIgnore
+    private String senha;
+
+    @Column(length = 1)
+    @NotNull
+    @JsonIgnore
+    private String admin = "N";
+
     public Cliente merge(Cliente clienteToMerge){
         this.setNome(clienteToMerge.getNome());
         this.setEmail(clienteToMerge.getEmail());
@@ -69,6 +81,12 @@ public class Cliente {
         this.setBairro(clienteToMerge.getBairro());
         this.setCidade(clienteToMerge.getCidade());
         this.setUf(clienteToMerge.getUf());
+
+        if (!ObjectUtils.isEmpty(clienteToMerge.getSenha())) {
+            this.setSenha(clienteToMerge.getSenha());
+        }
+
+        this.setAdmin(clienteToMerge.getAdmin());
 
         return this;
     }

@@ -17,6 +17,12 @@
     font-weight: 700;
 }
 
+.h3-dados {
+    text-align: left;
+    font-weight: 300;
+    font-size: 1.5em;
+}
+
 .produtos {
     display: flex;
     flex-direction: row;

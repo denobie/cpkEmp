@@ -16,6 +16,7 @@ public class ClienteDTO {
     private String bairro;
     private String cidade;
     private String uf;
+    private String admin;
 
     public static ClienteDTO fromEntity(Cliente cliente){
         ClienteDTO clienteDTO = new ClienteDTO();
@@ -30,6 +31,7 @@ public class ClienteDTO {
         clienteDTO.setBairro(cliente.getBairro());
         clienteDTO.setCidade(cliente.getCidade());
         clienteDTO.setUf(cliente.getUf());
+        clienteDTO.setAdmin(cliente.getAdmin());
 
         return clienteDTO;
     }
@@ -47,6 +49,7 @@ public class ClienteDTO {
         cliente.setBairro(this.getBairro());
         cliente.setCidade(this.getCidade());
         cliente.setUf(this.getUf());
+        cliente.setAdmin(this.getAdmin());
 
         return cliente;
     }

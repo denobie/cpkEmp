@@ -1,10 +1,9 @@
 import axios from "axios";
 import {useContext, useEffect, useState} from "react";
-import './ProdutoList.css'
+import './Catalogo.css'
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import {CarrinhoContext} from '../../contexts/CarrinhoContext';
-import {useNavigate} from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 import {Alert} from "@mui/material";
@@ -16,6 +15,7 @@ function getProdutos() {
 
 function Produto({produto}) {
     const { handleAddCart, handleRemoveFromCart } = useContext(CarrinhoContext);
+
     const [stateSnackbar, setStateSnackbar] = useState({
         open: false,
     });
@@ -44,10 +44,12 @@ function Produto({produto}) {
                         </h2>
                     </div>
                     <div className="div-preco">
-                        <p>{formatCurrency(produto.preco)}</p>
+                        <h3 className="h3-dados">
+                            <p>{formatCurrency(produto.preco)}</p>
+                        </h3>
                     </div>
                     <div>
-                        <Button variant="contained" startIcon={<AddShoppingCartIcon />} onClick={
+                        <Button variant="contained" startIcon={<AddShoppingCartIcon/>} onClick={
                             () => {
                                 handleAddCart(produto, 1);
                                 setStateSnackbar({ ...stateSnackbar,
@@ -90,10 +92,9 @@ function Produto({produto}) {
     )
 }
 
-function ProdutoList() {
+function Catalogo() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const navigate = useNavigate();
 
     useEffect(() => {
         buscarProdutos()
@@ -120,11 +121,7 @@ function ProdutoList() {
         ) : (
             !loading && <p>Nenhum produto encontrado.</p>
         )}
-
-        {/*<Button variant="contained" onClick={buscarProdutos}>Buscar</Button>*/}
-        {/*<Button variant="contained" onClick={() => {navigate("/carrinho")}}>Carrinho</Button>*/}
-
     </div>
 }
 
-export default ProdutoList;
+export default Catalogo;

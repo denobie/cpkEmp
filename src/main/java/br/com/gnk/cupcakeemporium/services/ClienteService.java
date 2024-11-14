@@ -1,6 +1,7 @@
 package br.com.gnk.cupcakeemporium.services;
 
 import br.com.gnk.cupcakeemporium.dto.ClienteDTO;
+import br.com.gnk.cupcakeemporium.dto.LoginDTO;
 import br.com.gnk.cupcakeemporium.entities.Cliente;
 import br.com.gnk.cupcakeemporium.exceptions.DataBaseException;
 import br.com.gnk.cupcakeemporium.exceptions.RestException;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +62,14 @@ public class ClienteService {
     private Cliente foundCliente(Long id){
         return this.clienteRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, String.format("Cliente '%d' não encontrado.", id)));
+    }
+
+    public ClienteDTO login(LoginDTO loginDTO) {
+        if (ObjectUtils.isEmpty(loginDTO.getEmail().isBlank()) || ObjectUtils.isEmpty(loginDTO.getSenha())) {
+            throw new RestException(HttpStatus.NOT_FOUND, "Usuário ou Senha inválidos");
+        }
+
+        return ClienteDTO.fromEntity(this.clienteRepository.findByEmailIgnoreCaseAndSenhaIgnoreCase(loginDTO.getEmail(), loginDTO.getSenha())
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Usuário ou Senha inválidos")));
     }
 }

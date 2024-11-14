@@ -1,35 +1,29 @@
 import Button from '@mui/material/Button';
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
+import './Home.css'
 
 function Home() {
-    const navigate = useNavigate();
-
-    const navigateToProdutoList = () => {
-        navigate("/produtos")
-    }
-
-    const navigateToNovoProduto = () => {
-        navigate("/produtos/novo")
-    }
-
-    const navigateToClientList = () => {
-        navigate("/clientes")
-    }
-
-    const navigateToNovoCliente = () => {
-        navigate("/cliente/novo")
-    }
-
-    return <div className={"div-panel"}>
-        <div>
-            <Button variant="contained" onClick={navigateToProdutoList}>Produtos</Button>
-            {/*<Link style={{ textDecoration: 'none' }} to="/produtos">  <Button variant="contained" >Produtos</Button></Link>*/}
-            {/*<Link to="/produtos/novo">  <Button variant="contained" >Novo Produtos</Button></Link>*/}
-            <Button variant="contained" onClick={navigateToNovoProduto}>Novo Produto</Button>
+    return <div>
+        <div className="div-botoes">
+            <Link style={{textDecoration: 'none'}} to="/catalogo">
+                <Button variant="contained">Catálogo</Button>
+            </Link>
         </div>
-        <div>
-            <Button variant="contained" onClick={navigateToClientList}>Clientes</Button>
-            <Button variant="contained" onClick={navigateToNovoCliente}>NovoCliente</Button>
+        <div className="div-botoes">
+            <Link style={{textDecoration: 'none'}} to="/catalogo">
+                <Button variant="contained">Produtos</Button>
+            </Link>
+            <Link style={{textDecoration: 'none'}} to="/produtos/novo">
+                <Button variant="contained">Novo Produto</Button>
+            </Link>
+        </div>
+        <div className="div-botoes">
+            <Link style={{textDecoration: 'none'}} to="/clientes">
+                <Button variant="contained">Clientes</Button>
+            </Link>
+            <Link style={{textDecoration: 'none'}} to="/cliente/novo">
+                <Button variant="contained">Novo Cliente</Button>
+            </Link>
         </div>
     </div>
 }

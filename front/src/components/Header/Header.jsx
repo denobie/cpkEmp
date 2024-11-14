@@ -3,8 +3,10 @@ import imgLogo from '../../imagens/cupcake100x100.png'
 import {useContext} from "react";
 import {CarrinhoContext} from "../../contexts/CarrinhoContext";
 import {Link} from "react-router-dom";
+import {UserContext} from "../../contexts/UserContext";
 
 function Header() {
+    const { userLogged } = useContext(UserContext);
     const {cartCount} = useContext(CarrinhoContext);
 
     const valueCountCart = cartCount > 9 ? 'cart-count-10' : 'cart-count';
@@ -13,7 +15,7 @@ function Header() {
         <header className="header">
             <div className="main">
                 <div className="nav-left">
-                    <Link className="link" to={"/home"}>
+                    <Link className="link" to={userLogged.admin === 'S' ? "/home" : "/catalogo"}>
                         <img className="img-produto" src={imgLogo} width="85" height="85"/>
                     </Link>
                     <h1 className="h1-nome-logo">Cupcake Emporium</h1>

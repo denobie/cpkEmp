@@ -10,11 +10,8 @@ function CarrinhoProvider ({ children }) {
     })
 
     useEffect(() => {
-
-        console.log("Salvou no storage", {cartItems})
         if (cartItems !== undefined) {
-
-       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
         }
 
      }, [cartItems]);
@@ -47,19 +44,16 @@ function CarrinhoProvider ({ children }) {
         localStorage.removeItem(cartItems);
     }
 
-    const count = useMemo(() => {
-        let count = 0;
+    const cartCount = useMemo(() => {
+        return cartItems?.reduce((count, item) => count + item.quantidade, 0);
+    }, [cartItems]);
 
-        cartItems?.forEach((item) =>
-            count = (count + item?.quantidade)
-        );
-
-        return count;
+    const cartTotal = useMemo(() => {
+        return cartItems?.reduce((total, item) => total + item.preco * item.quantidade, 0);
     }, [cartItems]);
 
     return (
-
-        <CarrinhoContext.Provider value={{ cartItems: cartItems ?? [], handleAddCart, handleRemoveFromCart, handleClearCart, cartCount: count }}>
+        <CarrinhoContext.Provider value={{ cartItems: cartItems ?? [], handleAddCart, handleRemoveFromCart, handleClearCart, cartCount, cartTotal }}>
             {children}
         </CarrinhoContext.Provider>
     );

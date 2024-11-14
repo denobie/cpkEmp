@@ -1,139 +1,158 @@
 import Card from "@mui/material/Card";
-import {CardActions, CardContent, CardHeader, RadioGroup, Select} from "@mui/material";
-import {Label} from "@mui/icons-material";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import {useContext, useState} from "react";
+import {CarrinhoContext} from "../../contexts/CarrinhoContext";
+import MenuItem from '@mui/material/MenuItem';
+import CardContent from '@mui/material/CardContent';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-export function CardPaymentMethod() {
+export function CardPaymentMethod({ onPaymentMethod, onPaymentAmount }) {
+    const [formaPagamento, setFormaPagamento] = useState('a');
+    const [qtdeParcelas, setQtdeParcelas] = useState(1);
+    const { cartTotal } = useContext(CarrinhoContext);
+
+    const handlePaymentMethod = (event) => {
+        const paymentMethod = event.target.value;
+
+        setFormaPagamento(paymentMethod);
+
+        if (onPaymentMethod) {
+            onPaymentMethod(paymentMethod);
+        }
+    }
+
+    const handlePaymentAmount = (event) => {
+        let paymentAmount = event.target.value;
+
+        if (formaPagamento !== 'c'){
+            paymentAmount = 0
+        }
+
+        setQtdeParcelas(paymentAmount);
+
+        if (onPaymentAmount) {
+            onPaymentAmount(paymentAmount);
+        }
+    }
+
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Payment Method</CardTitle>
-                <CardDescription>
-                    Add a new payment method to your account.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6">
-                <RadioGroup defaultValue="card" className="grid grid-cols-3 gap-4">
-                    <div>
-                        <RadioGroupItem
-                            value="card"
-                            id="card"
-                            className="peer sr-only"
-                            aria-label="Card"
-                        />
-                        <Label
-                            htmlFor="card"
-                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+        <Card sx={{ minWidth: 275, backgroundColor: "#ede4f2", border: "1px solid lightgray", borderRadius: "7px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" }}>
+            <CardContent>
+                <Typography variant="h5" component="div" mb={1}>
+                    Valor Total: R$ {cartTotal.toFixed(2)}
+                </Typography>
+                <Typography variant="h5" component="div">
+                    Forma de Pagamento
+                </Typography>
+                <FormControl>
+                        <RadioGroup
+                            row
+                            defaultValue="a"
+                            value={formaPagamento}
+                            onChange={handlePaymentMethod}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                className="mb-3 h-6 w-6"
+                            <FormControlLabel value="a" control={<Radio />} label="Boleto (à vista)" />
+                            <FormControlLabel value="c" control={<Radio />} label="Cartão de Crédito" />
+                            <FormControlLabel value="d" control={<Radio />} label="Cartão de Débito" />
+                            <FormControlLabel value="p" control={<Radio />} label="Pix" />
+                    </RadioGroup>
+                </FormControl>
+                {(formaPagamento === 'c' || formaPagamento === 'd') && (
+                <Box id="box-cartao" display="flex" flexDirection="column" alignItems="center" maxWidth="600px"
+                     margin="auto" mt={1} visibility="visible">
+                    <Box  mb={1}>
+                        <TextField id={"nomeCartao"} name="nomeCartao" type="text" label="Nome no Cartão" variant="outlined" size="small"
+                                   sx={{ width: '300px' }}
+                        />
+                    </Box>
+                    <Box mb={1}>
+                        <TextField id={"numeroCartao"} name="numeroCartao" type="text" label="Número do Cartão" variant="outlined" size="small"
+                                   sx={{ width: '300px' }}
+                        />
+                    </Box>
+                    <Box mb={1} fleDirection="column">
+                        <FormControl sx={{minWidth: 120, mr: 7.5 }}>
+                            <InputLabel id="label-mes">Mês</InputLabel>
+                            <Select labelId="label-mes" label="Mês">
+                                <MenuItem value={1}>01</MenuItem>
+                                <MenuItem value={2}>02</MenuItem>
+                                <MenuItem value={3}>03</MenuItem>
+                                <MenuItem value={4}>04</MenuItem>
+                                <MenuItem value={5}>05</MenuItem>
+                                <MenuItem value={6}>06</MenuItem>
+                                <MenuItem value={7}>07</MenuItem>
+                                <MenuItem value={8}>08</MenuItem>
+                                <MenuItem value={9}>09</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={11}>11</MenuItem>
+                                <MenuItem value={12}>12</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ minWidth: 120 }}>
+                            <InputLabel id="label-ano">Ano</InputLabel>
+                            <Select labelId="label-ano" label="Ano">
+                                <MenuItem value={2024}>2024</MenuItem>
+                                <MenuItem value={2025}>2025</MenuItem>
+                                <MenuItem value={2026}>2026</MenuItem>
+                                <MenuItem value={2027}>2027</MenuItem>
+                                <MenuItem value={2028}>2028</MenuItem>
+                                <MenuItem value={2029}>2029</MenuItem>
+                                <MenuItem value={2030}>2030</MenuItem>
+                                <MenuItem value={2031}>2031</MenuItem>
+                                <MenuItem value={2033}>2033</MenuItem>
+                                <MenuItem value={2034}>2034</MenuItem>
+                                <MenuItem value={2035}>2035</MenuItem>
+                                <MenuItem value={2036}>2036</MenuItem>
+                                <MenuItem value={2037}>2037</MenuItem>
+                                <MenuItem value={2038}>2038</MenuItem>
+                                <MenuItem value={2039}>2039</MenuItem>
+                                <MenuItem value={2040}>2040</MenuItem>
+                                <MenuItem value={2041}>2041</MenuItem>
+                                <MenuItem value={2042}>2042</MenuItem>
+                                <MenuItem value={2043}>2043</MenuItem>
+                                <MenuItem value={2044}>2044</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box mb={1}>
+                        <TextField id={"cvv"} name="cvv" type="text" label="CVV" variant="outlined" size="small"
+                                   sx={{ width: '300px' }}
+                        />
+                    </Box>
+                    {(formaPagamento === 'c') &&
+                    <Box mb={1} sx={{ minWidth: 300 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="label-parcelas">Número de Parcelas</InputLabel>
+                            <Select labelId="label-parcelas" label="Número de Parcelas"
+                                    onSelect={handlePaymentAmount}
+                                    value={qtdeParcelas}
                             >
-                                <rect width="20" height="14" x="2" y="5" rx="2" />
-                                <path d="M2 10h20" />
-                            </svg>
-                            Card
-                        </Label>
-                    </div>
-
-                    <div>
-                        <RadioGroupItem
-                            value="paypal"
-                            id="paypal"
-                            className="peer sr-only"
-                            aria-label="Paypal"
-                        />
-                        <Label
-                            htmlFor="paypal"
-                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                        >
-                            <Icons.paypal className="mb-3 h-6 w-6" />
-                            Paypal
-                        </Label>
-                    </div>
-
-                    <div>
-                        <RadioGroupItem
-                            value="apple"
-                            id="apple"
-                            className="peer sr-only"
-                            aria-label="Apple"
-                        />
-                        <Label
-                            htmlFor="apple"
-                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                        >
-                            <Icons.apple className="mb-3 h-6 w-6" />
-                            Apple
-                        </Label>
-                    </div>
-                </RadioGroup>
-                <div className="grid gap-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="First Last" />
-                </div>
-                <div className="grid gap-2">
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" placeholder="" />
-                </div>
-                <div className="grid gap-2">
-                    <Label htmlFor="number">Card number</Label>
-                    <Input id="number" placeholder="" />
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="month">Expires</Label>
-                        <Select>
-                            <SelectTrigger id="month" aria-label="Month">
-                                <SelectValue placeholder="Month" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="1">January</SelectItem>
-                                <SelectItem value="2">February</SelectItem>
-                                <SelectItem value="3">March</SelectItem>
-                                <SelectItem value="4">April</SelectItem>
-                                <SelectItem value="5">May</SelectItem>
-                                <SelectItem value="6">June</SelectItem>
-                                <SelectItem value="7">July</SelectItem>
-                                <SelectItem value="8">August</SelectItem>
-                                <SelectItem value="9">September</SelectItem>
-                                <SelectItem value="10">October</SelectItem>
-                                <SelectItem value="11">November</SelectItem>
-                                <SelectItem value="12">December</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="year">Year</Label>
-                        <Select>
-                            <SelectTrigger id="year" aria-label="Year">
-                                <SelectValue placeholder="Year" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {Array.from({ length: 10 }, (_, i) => (
-                                    <SelectItem key={i} value={`${new Date().getFullYear() + i}`}>
-                                        {new Date().getFullYear() + i}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="cvc">CVC</Label>
-                        <Input id="cvc" placeholder="CVC" />
-                    </div>
-                </div>
+                                <MenuItem value={1}>1x sem Juros</MenuItem>
+                                <MenuItem value={2}>2x sem Juros</MenuItem>
+                                <MenuItem value={3}>3x sem Juros</MenuItem>
+                                <MenuItem value={4}>4x sem Juros</MenuItem>
+                                <MenuItem value={5}>5x sem Juros</MenuItem>
+                                <MenuItem value={6}>6x sem Juros</MenuItem>
+                                <MenuItem value={7}>7x sem Juros</MenuItem>
+                                <MenuItem value={8}>8x sem Juros</MenuItem>
+                                <MenuItem value={9}>9x sem Juros</MenuItem>
+                                <MenuItem value={10}>10x sem Juros</MenuItem>
+                                <MenuItem value={11}>11x com Juros</MenuItem>
+                                <MenuItem value={12}>12x com Juros</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    }
+                </Box>)}
             </CardContent>
-            <CardActions>
-                <Button className="w-full">Continue</Button>
-            </CardActions>
         </Card>
     )
 }

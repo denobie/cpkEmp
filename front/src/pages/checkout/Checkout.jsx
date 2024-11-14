@@ -2,70 +2,108 @@ import {useContext, useState} from "react";
 import axios from "axios";
 import {CarrinhoContext} from "../../contexts/CarrinhoContext";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import PaidIcon from '@mui/icons-material/Paid';
+import {CardPaymentMethod} from "../../components/Card/CardPaymentMethod";
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
+import {Alert} from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import './Checkout.css'
 
 function Checkout(){
-    const {cartItems} = useContext(CarrinhoContext)
-    const [pedido, setPedido] = useState([]);
+    const navigate = useNavigate();
+    const {cartItems, handleClearCart} = useContext(CarrinhoContext)
+    const [formaPagamento, setFormaPagamento] = useState('a');
+    const [stateSnackbar, setStateSnackbar] = useState({
+        open: false,
+    });
+    const [pedidoFinalizado, setPedidoFinalizado] = useState(false);
 
-    /*{
-        "dataEmissao": "2024-10-29",
-        "cliente": "1",
-        "itens": [
-            {
-                "preco": 4.00,
-                "desconto": 0.00,
-                "quantidade": 2,
-                "produto": {
-                    "id": 39
-                }
-            },
-            {
-                "preco": 1.5,
-                "desconto": 0.00,
-                "quantidade": 1,
-                "produto": {
-                    "id": 4
-                }
-            },
-            {
-                "preco": 1.5,
-                "desconto": 0.50,
-                "quantidade": 2,
-                "produto": {
-                    "id": 3
-                }
+    const navigateToCatalogo = () => {
+        navigate("/catalogo")
+    }
+
+    const handleClose = () => {
+        setStateSnackbar({ ...stateSnackbar, open: false });
+
+        if (pedidoFinalizado){
+            handleClearCart();
+            navigateToCatalogo();
+        }
+    };
+
+    const handlePaymentMethod = (paymentMethod) => {
+        setFormaPagamento(paymentMethod)
+    }
+
+    function getItems(cartItems) {
+        const itens = cartItems.map(item => ({
+            preco: item.preco,
+            desconto: item.desconto,
+            quantidade: item.quantidade,
+            produto: {
+                id: item.id
             }
-        ],
-        "formaPagamento": "A",
-        "quantidadeParcelas": 0
-    }*/
+
+        }));
+
+        return itens;
+    }
 
     const fecharPedido = () => {
-        const pedidoFechado = ({...pedido,
+        const pedidoFechado = ({
             dataEmissao: new Date().toJSON(),
-            itens: cartItems
+            cliente: 1,
+            itens: getItems(cartItems),
+            formaPagamento: formaPagamento.toUpperCase(),
+            quantidadeParcelas: 0
         });
-
-        cartItems.map((item) =>(
-            alert(item.quantidade)
-        ))
 
         axios.post('http://localhost:8080/api/pedido', pedidoFechado)
             .then(() => {
-                    alert("teste")
+                setPedidoFinalizado(true);
+                setStateSnackbar({ ...stateSnackbar,
+                    open: true,
+                    severity: "success",
+                    message: "Pedido Finalizado com Sucesso!"});
                 }
             )
             .catch(() => {
-                    alert("bayBlade")
+                setPedidoFinalizado(false);
+                setStateSnackbar({ ...stateSnackbar,
+                    open: true,
+                    severity: "error",
+                    message: "Falha ao Finalizar Pedido!"});
                 }
             )
     }
 
     return (
-        <div>
-            <Button variant="contained" startIcon={<PaidIcon />} onClick={fecharPedido}>Pagar</Button>
+        <div style={{padding: '30px', margin: '30px'}}>
+            <CardPaymentMethod onPaymentMethod={handlePaymentMethod}/>
+            <div className="div-payment">
+                <Link to={"/carrinho"} style={{textDecoration: "none"}}>
+                    <Button variant="contained" startIcon={<ShoppingCartOutlinedIcon />}>Voltar ao Carrinho</Button>
+                </Link>
+                <Button variant="contained" startIcon={<PaidIcon />} onClick={fecharPedido}>Pagar</Button>
+            </div>
+            <Snackbar
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                open={stateSnackbar.open}
+                onClose={handleClose}
+                TransitionComponent={Slide}
+                key={stateSnackbar.vertical + stateSnackbar.horizontal}
+                autoHideDuration={1500}>
+                <Alert
+                    onClose={handleClose}
+                    severity={stateSnackbar.severity}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {stateSnackbar.message}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
