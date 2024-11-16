@@ -39,7 +39,7 @@
     margin-bottom: 20px;
 }
 
-.input-login[type="email"], input[type="password"] {
+.input-login {
     width: 100%;
     padding: 10px;
     margin: 10px 0;

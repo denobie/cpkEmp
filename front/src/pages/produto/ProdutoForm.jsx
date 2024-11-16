@@ -39,24 +39,47 @@ function ProdutoForm() {
     };
 
       const salvar = () => {
-          axios.post('http://localhost:8080/api/produto', produto)
-              .then(() => {
-                  setStateSnackbar(
-                      {...stateSnackbar,
-                          open: true,
-                          severity: 'success',
-                          message: 'Produto Cadastrado com Sucesso!'
-                      }
-                  )}
-              )
-              .catch(() => {
-                  setStateSnackbar(
-                      {...stateSnackbar,
-                          open: true,
-                          severity: 'error',
-                          message: 'Erro ao Cadastrar Produto!'
-                      }
-                  )})
+          if (id === 'novo') {
+              axios.post('http://localhost:8080/api/produto', produto)
+                  .then(() => {
+                      setStateSnackbar(
+                          {...stateSnackbar,
+                              open: true,
+                              severity: 'success',
+                              message: 'Produto Cadastrado com Sucesso!'
+                          }
+                      )
+                  })
+                  .catch(() => {
+                      setStateSnackbar(
+                          {...stateSnackbar,
+                              open: true,
+                              severity: 'error',
+                              message: 'Erro ao Cadastrar Produto!'
+                          }
+                      )
+                  })
+          }else {
+              axios.put(`http://localhost:8080/api/produto/${id}`, produto)
+                  .then(() => {
+                      setStateSnackbar(
+                          {...stateSnackbar,
+                              open: true,
+                              severity: 'success',
+                              message: 'Produto Atualizado com Sucesso!'
+                          }
+                      )
+                  })
+                  .catch(() => {
+                      setStateSnackbar(
+                          {...stateSnackbar,
+                              open: true,
+                              severity: 'error',
+                              message: 'Erro ao Atualizar Produto!'
+                          }
+                      )
+                  })
+          }
       }
 
         return <Box display="flex" flexDirection="column" alignItems="center" maxWidth="600px"
@@ -101,12 +124,7 @@ function ProdutoForm() {
                     <CardJustImage alt={produto.descricao} image={produto.caminhoimagem} height={300}/>
                 )}
             </Box>
-
             <Button variant="contained" size="small" startIcon={<SaveIcon/>} onClick={salvar}>Salvar</Button>
-
-            {/*Extrair esse Snackbar para um componente.
-            Para receber os dados (msg, severity, etc) via parâmetros e usar o useState para passar os valores.*/}
-
             <Snackbar
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                 open={stateSnackbar.open}

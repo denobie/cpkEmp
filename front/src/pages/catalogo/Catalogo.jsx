@@ -8,9 +8,10 @@ import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 import {Alert} from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {useOutletContext} from "react-router-dom";
 
 function getProdutos() {
-    return axios.get('http://192.168.18.12:8080/api/produto')
+    return axios.get('http://127.0.0.1:8080/api/produto')
 }
 
 function Produto({produto}) {
@@ -95,18 +96,24 @@ function Produto({produto}) {
 function Catalogo() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { consultaProduto } = useOutletContext();
 
     useEffect(() => {
-        buscarProdutos()
-    }, []);
+        buscarProdutos();
+    }, [consultaProduto]);
 
     const buscarProdutos = () => {
         setLoading(true);
-         getProdutos()
-            .then(resultado => setProdutos(resultado.data.content))
-            .catch(error => console.log(error))
+
+        const url = consultaProduto
+            ? `http://127.0.0.1:8080/api/produto/search/${consultaProduto}`
+            : `http://127.0.0.1:8080/api/produto`;
+
+        axios.get(url)
+            .then((resultado) => setProdutos(resultado.data.content))
+            .catch((error) => console.error(error))
             .finally(() => setLoading(false));
-    }
+    };
 
     return <div>
         {loading && <div>Carregando...</div>}

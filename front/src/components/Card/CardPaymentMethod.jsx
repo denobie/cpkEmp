@@ -132,7 +132,7 @@ export function CardPaymentMethod({ onPaymentMethod, onPaymentAmount }) {
                         <FormControl fullWidth>
                             <InputLabel id="label-parcelas">Número de Parcelas</InputLabel>
                             <Select labelId="label-parcelas" label="Número de Parcelas"
-                                    onSelect={handlePaymentAmount}
+                                    onChange={handlePaymentAmount}
                                     value={qtdeParcelas}
                             >
                                 <MenuItem value={1}>1x sem Juros</MenuItem>

@@ -19,6 +19,13 @@
     margin-top: 24px;
 }
 
+.h2-user {
+    color: #9c27b0;
+    font-size: 12px;
+    margin-top: -10px;
+    float: left;
+}
+
 .nav-left{
     float: left;
     height: 60px;
@@ -26,8 +33,8 @@
     display: flex;
 }
 
-.nav-left{
-    float: left;
+.nav-fill{
+    margin-top: 24px;
 }
 
 .nav-right{

@@ -52,9 +52,9 @@ function Login() {
 
             <button className="btn" onClick={login}>Login</button>
 
-            <a href="/catalogo" className="link">Esqueceu sua senha?</a>
+            {/*<a href="/catalogo" className="link">Esqueceu sua senha?</a>*/}
 
-            <button className="btn create-account">Criar Conta</button>
+            <button className="btn create-account" onClick={() => {navigate("/cliente/novoLogin")}}>Criar Conta</button>
         </div>
     </div>
 }

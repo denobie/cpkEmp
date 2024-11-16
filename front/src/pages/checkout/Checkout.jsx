@@ -10,11 +10,14 @@ import {Alert} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import './Checkout.css'
+import {UserContext} from "../../contexts/UserContext";
 
 function Checkout(){
     const navigate = useNavigate();
     const {cartItems, handleClearCart} = useContext(CarrinhoContext)
+    const { userLogged } = useContext(UserContext);
     const [formaPagamento, setFormaPagamento] = useState('a');
+    const [qtdeParcelas, setQtdeParcelas] = useState(1);
     const [stateSnackbar, setStateSnackbar] = useState({
         open: false,
     });
@@ -37,6 +40,10 @@ function Checkout(){
         setFormaPagamento(paymentMethod)
     }
 
+    const handlePaymentAmount = (onPaymentAmount) => {
+        setQtdeParcelas(onPaymentAmount)
+    }
+
     function getItems(cartItems) {
         const itens = cartItems.map(item => ({
             preco: item.preco,
@@ -54,10 +61,10 @@ function Checkout(){
     const fecharPedido = () => {
         const pedidoFechado = ({
             dataEmissao: new Date().toJSON(),
-            cliente: 1,
+            cliente: userLogged.id,
             itens: getItems(cartItems),
             formaPagamento: formaPagamento.toUpperCase(),
-            quantidadeParcelas: 0
+            quantidadeParcelas: qtdeParcelas
         });
 
         axios.post('http://localhost:8080/api/pedido', pedidoFechado)
@@ -81,7 +88,7 @@ function Checkout(){
 
     return (
         <div style={{padding: '30px', margin: '30px'}}>
-            <CardPaymentMethod onPaymentMethod={handlePaymentMethod}/>
+            <CardPaymentMethod onPaymentMethod={handlePaymentMethod} onPaymentAmount={handlePaymentAmount}/>
             <div className="div-payment">
                 <Link to={"/carrinho"} style={{textDecoration: "none"}}>
                     <Button variant="contained" startIcon={<ShoppingCartOutlinedIcon />}>Voltar ao Carrinho</Button>

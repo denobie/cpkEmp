@@ -10,10 +10,10 @@ function Home() {
             </Link>
         </div>
         <div className="div-botoes">
-            <Link style={{textDecoration: 'none'}} to="/catalogo">
+            <Link style={{textDecoration: 'none'}} to="/produtos">
                 <Button variant="contained">Produtos</Button>
             </Link>
-            <Link style={{textDecoration: 'none'}} to="/produtos/novo">
+            <Link style={{textDecoration: 'none'}} to="/produto/novo">
                 <Button variant="contained">Novo Produto</Button>
             </Link>
         </div>
