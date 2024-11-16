@@ -28,6 +28,11 @@ public class ProdutoResource {
         return ResponseEntity.ok(this.produtoService.findAll(pageable));
     }
 
+    @GetMapping("/search/{descricao}")
+    public ResponseEntity<Page<ProdutoDTO>> search(Pageable pageable, @PathVariable String descricao){
+        return ResponseEntity.ok(this.produtoService.search(pageable, descricao));
+    }
+
     @PostMapping
     public ResponseEntity<ProdutoDTO> insert(@RequestBody @Valid ProdutoDTO produtoRequestDTO){
         return ResponseEntity.created(URI.create("")).body(this.produtoService.insert(produtoRequestDTO));

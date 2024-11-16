@@ -26,6 +26,10 @@ public class ProdutoService {
         return this.produtoRepository.findAll(pageable).map(ProdutoDTO::fromEntity);
     }
 
+    public Page<ProdutoDTO> search(Pageable pageable, String descricao){
+        return this.produtoRepository.findByDescricaoIgnoreCaseContaining(pageable, descricao).map(ProdutoDTO::fromEntity);
+    }
+
     public ProdutoDTO insert(ProdutoDTO produtoRequestDTO){
         Produto produtoSaved = this.produtoRepository.save(produtoRequestDTO.toEntity());
 

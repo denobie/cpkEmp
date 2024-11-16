@@ -17,6 +17,7 @@ public class ClienteDTO {
     private String cidade;
     private String uf;
     private String admin;
+    private String senha;
 
     public static ClienteDTO fromEntity(Cliente cliente){
         ClienteDTO clienteDTO = new ClienteDTO();
@@ -32,6 +33,7 @@ public class ClienteDTO {
         clienteDTO.setCidade(cliente.getCidade());
         clienteDTO.setUf(cliente.getUf());
         clienteDTO.setAdmin(cliente.getAdmin());
+        clienteDTO.setSenha(cliente.getSenha());
 
         return clienteDTO;
     }
@@ -50,6 +52,7 @@ public class ClienteDTO {
         cliente.setCidade(this.getCidade());
         cliente.setUf(this.getUf());
         cliente.setAdmin(this.getAdmin());
+        cliente.setSenha(this.getSenha());
 
         return cliente;
     }
