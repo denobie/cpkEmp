@@ -17,10 +17,13 @@ import Checkout from "./pages/checkout/Checkout";
 import UserProvider from "./contexts/UserContext";
 import ProdutoList from "./pages/produto/ProdutoList";
 import {useState} from "react";
+import axios from "axios";
 
 const MainLayout = () => {
     const location = useLocation();
     const [consultaProduto, setConsultaProduto] = useState("");
+
+    axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true'
 
     const noHeaderPaths = [
         "/",
